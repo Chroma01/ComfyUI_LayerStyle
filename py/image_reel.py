@@ -195,6 +195,9 @@ class ImageReelComposit:
         font_space = int(font_size * 1.5)
         width = max(reel.image.width for reel in reels)
         height = sum(reel.image.height + font_space + border for reel in reels)
+        # yuv420p encoders such as libx264 require even frame dimensions.
+        width += width % 2
+        height += height % 2
 
         ret_image = Image.new('RGB', (width, height), color=bg_color)
         paste_y = 0
