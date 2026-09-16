@@ -59,6 +59,22 @@ except ImportError as e:
 
 
 
+'''device selection'''
+
+
+# Shared device options for node UI dropdowns.
+# 'auto' follows ComfyUI's default device (CUDA/NPU/XPU/MPS/CPU depending on the runtime).
+DEVICE_LIST_OPTIONS = ['auto', 'cuda', 'cpu']
+
+
+def get_device(device_str: str = "auto"):
+    """Resolve a user-facing device option to a torch.device.
+    'auto' returns ComfyUI's default device (handles CUDA/NPU/XPU/MPS/CPU)."""
+    if device_str == "cpu":
+        return torch.device("cpu")
+    return comfy.model_management.get_torch_device()
+
+
 '''warpper'''
 
 # create a wrapper function that can apply a function to multiple images in a batch while passing all other arguments to the function
